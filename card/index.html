@@ -153,6 +153,7 @@
     font-weight:600;
     cursor:pointer;
     text-align:center;
+    text-decoration:none;
   }
 
   .expand-section {
@@ -181,67 +182,14 @@
     margin-top:8px;
   }
 
-  /* Modal overlay */
-  .modal {
-    display:none;
-    position:fixed;
-    top:0; left:0;
-    width:100%; height:100%;
-    background:rgba(0,0,0,0.6);
-    justify-content:center;
-    align-items:center;
-    z-index:1000;
-    padding:10px;
-  }
-
-  .modal-content {
-    width:100%;
-    max-width:480px;
-    background:white;
-    border-radius:12px;
-    overflow:hidden;
-    position:relative;
-  }
-
-  .modal-content iframe {
-    height:80vh;
-    width:100%;
-    border:none;
-  }
-
-  .close-modal {
-    position:absolute;
-    top:8px;
-    right:8px;
-    background:var(--accent);
-    color:white;
-    border:none;
-    border-radius:50%;
-    width:30px;
-    height:30px;
-    font-weight:bold;
-    cursor:pointer;
-  }
-
   @media(max-width:400px){
-    .header {
-      flex-direction:column;
-      align-items:center;
-      text-align:center;
-    }
-
-    .contact {
-      flex:1 1 100%;
-    }
-
-    .btn, .link-btn {
-      flex:1 1 100%;
-    }
+    .header { flex-direction:column; align-items:center; text-align:center; }
+    .contact { flex:1 1 100%; }
+    .btn, .link-btn { flex:1 1 100%; }
   }
 </style>
 </head>
 <body>
-
 <div class="card">
 
   <div class="company-logo-card">
@@ -249,9 +197,7 @@
   </div>
 
   <div class="header">
-    <div class="logo">
-      <img src="your-profile-picture.jpg" alt="Redjell Diola">
-    </div>
+    <div class="logo"><img src="your-profile-picture.jpg" alt="Redjell Diola"></div>
     <div class="info">
       <h1>Redjell Diola</h1>
       <p>IT Consultant</p>
@@ -275,7 +221,7 @@
     <button class="link-btn" onclick="toggleSection('websiteFrame')">Company Website ▼</button>
     <button class="link-btn" onclick="toggleSection('googleReviews')">Rate Us! ▼</button>
     <button class="link-btn" onclick="toggleSection('inventoryFrame')">Our Inventory ▼</button>
-    <button class="link-btn" onclick="openAIModal()">My AI Partner</button>
+    <a class="link-btn" href="https://vapi.ai/?demo=true&shareKey=3f8f63da-b94f-4016-a224-f705f3d7791e&assistantId=514c5825-b4a8-42d1-9dce-93581101bb8f" target="_blank">My AI Partner</a>
   </div>
 
   <div id="profilePDF" class="expand-section">
@@ -288,23 +234,13 @@
 
   <div id="googleReviews" class="expand-section">
     <p>Share your experience with us.</p>
-    <a class="review-btn" href="https://linkly.link/2Tdda" target="_blank">
-      ⭐⭐⭐⭐⭐ Rate Us!
-    </a>
+    <a class="review-btn" href="https://linkly.link/2Tdda" target="_blank">⭐⭐⭐⭐⭐ Rate Us!</a>
   </div>
 
   <div id="inventoryFrame" class="expand-section">
     <iframe src="https://inventory.gulflandproperty.com/" height="400px"></iframe>
   </div>
 
-</div>
-
-<!-- Modal for AI Partner -->
-<div id="aiModal" class="modal">
-  <div class="modal-content">
-    <button class="close-modal" onclick="closeAIModal()">×</button>
-    <iframe src="https://vapi.ai/?demo=true&shareKey=3f8f63da-b94f-4016-a224-f705f3d7791e&assistantId=514c5825-b4a8-42d1-9dce-93581101bb8f"></iframe>
-  </div>
 </div>
 
 <script>
@@ -319,40 +255,8 @@ function makeVCard(){
     "EMAIL;TYPE=INTERNET:red-it@gulflandproperty.com",
     "URL:https://www.gulflandproperty.com/",
     "END:VCARD"
-  ].join("\r\n");
+  ].join("
+");
 }
 
-document.getElementById("saveContactBtn").onclick = function(){
-  const blob = new Blob([makeVCard()], {type:"text/vcard"});
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement("a");
-  a.href = url;
-  a.download = "RedjellDiola.vcf";
-  a.click();
-  URL.revokeObjectURL(url);
-};
-
-document.getElementById("copyBtn").onclick = async function(){
-  await navigator.clipboard.writeText("+971506328968");
-  this.textContent = "Copied!";
-  setTimeout(()=> this.textContent="Copy Number",1500);
-};
-
-function toggleSection(id){
-  const sections = ['profilePDF','websiteFrame','googleReviews','inventoryFrame'];
-  sections.forEach(sec => {
-    const el = document.getElementById(sec);
-    el.style.display = (sec===id && el.style.display!=="block") ? "block":"none";
-  });
-}
-
-/* AI Modal functions */
-function openAIModal(){
-  document.getElementById('aiModal').style.display = 'flex';
-}
-function closeAIModal(){
-  document.getElementById('aiModal').style.display = 'none';
-}
-</script>
-</body>
-</html>
+document.get
