@@ -38,7 +38,6 @@
     gap:15px;
   }
 
-  /* Company Logo Above Header */
   .company-logo-card {
     text-align:center;
     margin-bottom:10px;
@@ -48,7 +47,6 @@
     object-fit:contain;
   }
 
-  /* Header: Image + Info */
   .header {
     display:flex;
     gap:15px;
@@ -98,7 +96,6 @@
     color:var(--accent);
   }
 
-  /* Contact Row */
   .contact-row {
     display:flex;
     flex-wrap:wrap;
@@ -120,7 +117,6 @@
     border:1px solid rgba(11,79,132,0.1);
   }
 
-  /* Action Buttons */
   .actions {
     display:flex;
     gap:10px;
@@ -140,7 +136,6 @@
   .btn-primary { background:var(--accent); color:white; }
   .btn-ghost { background:white; color:var(--accent); border:1px solid rgba(11,79,132,0.2); }
 
-  /* Accordion Links */
   .links {
     display:flex;
     gap:8px;
@@ -160,7 +155,6 @@
     text-align:center;
   }
 
-  /* Expandable Sections */
   .expand-section {
     display:none;
     margin-top:10px;
@@ -187,6 +181,48 @@
     margin-top:8px;
   }
 
+  /* Modal overlay */
+  .modal {
+    display:none;
+    position:fixed;
+    top:0; left:0;
+    width:100%; height:100%;
+    background:rgba(0,0,0,0.6);
+    justify-content:center;
+    align-items:center;
+    z-index:1000;
+    padding:10px;
+  }
+
+  .modal-content {
+    width:100%;
+    max-width:480px;
+    background:white;
+    border-radius:12px;
+    overflow:hidden;
+    position:relative;
+  }
+
+  .modal-content iframe {
+    height:80vh;
+    width:100%;
+    border:none;
+  }
+
+  .close-modal {
+    position:absolute;
+    top:8px;
+    right:8px;
+    background:var(--accent);
+    color:white;
+    border:none;
+    border-radius:50%;
+    width:30px;
+    height:30px;
+    font-weight:bold;
+    cursor:pointer;
+  }
+
   @media(max-width:400px){
     .header {
       flex-direction:column;
@@ -208,12 +244,10 @@
 
 <div class="card">
 
-  <!-- Company Logo Above Header -->
   <div class="company-logo-card">
     <img src="company-logo.png" alt="Gulfland Property">
   </div>
 
-  <!-- Header: Picture + Info -->
   <div class="header">
     <div class="logo">
       <img src="your-profile-picture.jpg" alt="Redjell Diola">
@@ -225,28 +259,25 @@
     </div>
   </div>
 
-  <!-- Contact Row -->
   <div class="contact-row">
     <a class="contact" href="tel:+971506328968">📞 +971 50 632 8968</a>
     <a class="contact" href="mailto:red-it@gulflandproperty.com">✉️ red-it@gulflandproperty.com</a>
     <a class="contact" href="https://wa.me/971506328968" target="_blank">💬 WhatsApp</a>
   </div>
 
-  <!-- Action Buttons -->
   <div class="actions">
     <button class="btn btn-primary" id="saveContactBtn">Save Contact</button>
     <button class="btn btn-ghost" id="copyBtn">Copy Number</button>
   </div>
 
-  <!-- Accordion Links -->
   <div class="links">
     <button class="link-btn" onclick="toggleSection('profilePDF')">Company Profile ▼</button>
     <button class="link-btn" onclick="toggleSection('websiteFrame')">Company Website ▼</button>
     <button class="link-btn" onclick="toggleSection('googleReviews')">Rate Us! ▼</button>
     <button class="link-btn" onclick="toggleSection('inventoryFrame')">Our Inventory ▼</button>
+    <button class="link-btn" onclick="openAIModal()">My AI Partner</button>
   </div>
 
-  <!-- Expandable Sections -->
   <div id="profilePDF" class="expand-section">
     <embed src="company port.pdf" type="application/pdf" height="400px" />
   </div>
@@ -268,8 +299,15 @@
 
 </div>
 
+<!-- Modal for AI Partner -->
+<div id="aiModal" class="modal">
+  <div class="modal-content">
+    <button class="close-modal" onclick="closeAIModal()">×</button>
+    <iframe src="https://vapi.ai/?demo=true&shareKey=3f8f63da-b94f-4016-a224-f705f3d7791e&assistantId=514c5825-b4a8-42d1-9dce-93581101bb8f"></iframe>
+  </div>
+</div>
+
 <script>
-/* Save vCard */
 function makeVCard(){
   return [
     "BEGIN:VCARD",
@@ -300,7 +338,6 @@ document.getElementById("copyBtn").onclick = async function(){
   setTimeout(()=> this.textContent="Copy Number",1500);
 };
 
-/* Accordion behavior: only one section open at a time */
 function toggleSection(id){
   const sections = ['profilePDF','websiteFrame','googleReviews','inventoryFrame'];
   sections.forEach(sec => {
@@ -308,8 +345,14 @@ function toggleSection(id){
     el.style.display = (sec===id && el.style.display!=="block") ? "block":"none";
   });
 }
+
+/* AI Modal functions */
+function openAIModal(){
+  document.getElementById('aiModal').style.display = 'flex';
+}
+function closeAIModal(){
+  document.getElementById('aiModal').style.display = 'none';
+}
 </script>
 </body>
 </html>
-
-
